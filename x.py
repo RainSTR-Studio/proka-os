@@ -13,12 +13,15 @@ def cfg():
     log.info("Loading configurator...")
     os.system("cargo anaxa menuconfig")
 
-def build():
+def build(is_debug: bool):
     # TODO: Implement building logic
     log.info("Checking components for building...")
     check_component("build")
     log.info("Building Rust bootstrap...")
-    os.system("cargo run")
+    if is_debug:
+        os.system("RUST_LOG=info cargo run")
+    else:
+        os.system("RUST_LOG=info cargo run release")
 
 def parse_args():
     # The arg parser of this tool.
@@ -26,6 +29,7 @@ def parse_args():
     subparsers = parser.add_subparsers(dest="subcmd", required=False)
     sub_build = subparsers.add_parser("build", help="Build kernel ISO image")
     sub_cfg = subparsers.add_parser("menuconfig", help="Config parser")
+    sub_build.add_argument("-d", "--debug", action="store_true", help="Build as debug profile")
     sub_clean = subparsers.add_parser("clean", help="Clean up the file which was built")
     return parser.parse_args()
 
@@ -41,9 +45,14 @@ def main():
 
     # Parse arguments then
     args = parse_args()
-    if args.subcmd in (None, "build"):
-        build()
-    elif args.subcmd in "menuconfig":
+    if args.subcmd is None:
+        build(False)
+    elif args.subcmd == "build":
+        if args.debug:
+            build(True)
+        else:
+            build(False)
+    elif args.subcmd == "menuconfig":
         cfg()
 
 if __name__ == "__main__":

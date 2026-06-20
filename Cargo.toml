@@ -4,4 +4,7 @@ version = "0.0.0"
 edition = "2024"
 
 [dependencies]
+colored = "3.1.1"
+env_logger = "0.11.10"
 isobemak = "0.3.4"
+log = "0.4.32"
