@@ -7,6 +7,9 @@ import sys
 import os
 import shutil
 
+# Directories to build/clean
+dirs = ["bootloader", "kernel"]
+
 def cfg():
     log.info("Checking components for configuration...")
     check_component("menuconfig")
@@ -14,7 +17,6 @@ def cfg():
     os.system("cargo anaxa menuconfig")
 
 def build(is_debug: bool):
-    # TODO: Implement building logic
     log.info("Checking components for building...")
     check_component("build")
     log.info("Building Rust bootstrap...")
@@ -22,6 +24,13 @@ def build(is_debug: bool):
         os.system("RUST_LOG=info cargo run")
     else:
         os.system("RUST_LOG=info cargo run release")
+
+def clean():
+    for dir in dirs:
+        log.info(f"Cleaning up \"{dir}\"...")
+        os.system(f"make -C {dir} clean")
+    log.info(f"Cleaning up bootstrap...")
+    os.system(f"cargo clean")
 
 def parse_args():
     # The arg parser of this tool.
@@ -54,6 +63,8 @@ def main():
             build(False)
     elif args.subcmd == "menuconfig":
         cfg()
+    elif args.subcmd == "clean":
+        clean()
 
 if __name__ == "__main__":
     main()
