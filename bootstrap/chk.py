@@ -18,6 +18,11 @@ def check_component(typ: str) -> bool:
         log.error("\"cargo\" or \"rustc\" are missed.")
         return False
 
+    # Git is required as well, as it will help us pull down
+    # the submodules.
+    if not cmd_check("git"):
+        log.error("\"git\" was not found.")
+
     # For building, these components are all required
     match typ:
         case "build":

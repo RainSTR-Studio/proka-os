@@ -29,9 +29,15 @@ def parse_args():
     sub_clean = subparsers.add_parser("clean", help="Clean up the file which was built")
     return parser.parse_args()
 
+def pull_submod():
+    os.system("git submodule update --init --recursive --depth=1")
+
 def main():
     # Init logger
     init_log()
+
+    # Pull down submodules
+    log.info("Pulling down submodules for further operation...")
 
     # Parse arguments then
     args = parse_args()
