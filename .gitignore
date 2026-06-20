@@ -1,6 +1,9 @@
 # Generated config file
 .config
 
+# The directory which contains ISO root
+iso/*
+proka.iso
 
 # Added by cargo
 
