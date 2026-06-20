@@ -16,6 +16,24 @@ This is the main repository of ProkaOS, which contains the kernel, bootloader an
 
 This project has bootstrap to help you build up an image of this operating system, so that you are able to run this operating system through this image.
 
+## Build
+To build this project, you need to install these components:
+
+ - Rust (nightly);
+ - cargo-anaxa (build script will do);
+ - NASM (for assembly build)
+ - GCC (for C code generation)
+
+After installing them, you can run build script through this command:
+
+```bash
+# Build only
+python3 build.py
+
+# Do menu configuration
+python3 build.py menuconfig
+```
+
 ## Contributing
 Thank you to all contributors!
 
