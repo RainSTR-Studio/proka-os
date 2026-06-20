@@ -1,2 +1,7 @@
 # Generated config file
 .config
+
+
+# Added by cargo
+
+/target

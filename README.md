@@ -28,10 +28,10 @@ After installing them, you can run build script through this command:
 
 ```bash
 # Build only
-python3 build.py
+python3 x.py
 
 # Do menu configuration
-python3 build.py menuconfig
+python3 x.py menuconfig
 ```
 
 ## Contributing

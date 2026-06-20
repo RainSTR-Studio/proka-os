@@ -1,6 +1,5 @@
 #!/usr/bin/python3
-from bootstrap.build import build
-from bootstrap.menucfg import cfg
+from bootstrap.chk import check_component
 from bootstrap.logger import init_log, log
 import argparse
 import logging
@@ -8,8 +7,18 @@ import sys
 import os
 import shutil
 
-# TODO: Move this to config file
-dirs = ["bootloader", "kernel"]
+def cfg():
+    log.info("Checking components for configuration...")
+    check_component("menuconfig")
+    log.info("Loading configurator...")
+    os.system("cargo anaxa menuconfig")
+
+def build():
+    # TODO: Implement building logic
+    log.info("Checking components for building...")
+    check_component("build")
+    log.info("Building Rust bootstrap...")
+    os.system("cargo run")
 
 def parse_args():
     # The arg parser of this tool.
