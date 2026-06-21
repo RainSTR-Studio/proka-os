@@ -480,7 +480,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "proka-os-isobuild"
+name = "proka-builder"
 version = "0.0.0"
 dependencies = [
  "colored",

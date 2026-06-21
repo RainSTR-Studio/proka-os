@@ -23,6 +23,11 @@ def check_component(typ: str) -> bool:
     if not cmd_check("git"):
         log.error("\"git\" was not found.")
 
+    # Linker is the most important thing to build, we can't
+    # miss it (though most OS have it)
+    if not cmd_check("ld"):
+        log.error("\"ld\" was not found.")
+
     # For building, these components are all required
     match typ:
         case "build":

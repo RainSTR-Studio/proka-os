@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 from bootstrap.chk import check_component
 from bootstrap.logger import init_log, log
 import argparse
@@ -29,15 +29,18 @@ def clean():
     for dir in dirs:
         log.info(f"Cleaning up \"{dir}\"...")
         os.system(f"make -C {dir} clean")
-    log.info(f"Cleaning up bootstrap...")
-    os.system(f"cargo clean")
+    log.info("Cleaning up bootstrap...")
+    os.system("cargo clean")
+    log.info("Cleaning up the ISO and its build dir...")
+    shutil.rmtree(r"./iso")
+    os.remove("proka.iso")
 
 def parse_args():
     # The arg parser of this tool.
     parser = argparse.ArgumentParser(description="ProkaOS builder")
     subparsers = parser.add_subparsers(dest="subcmd", required=False)
     sub_build = subparsers.add_parser("build", help="Build kernel ISO image")
-    sub_cfg = subparsers.add_parser("menuconfig", help="Config parser")
+    sub_cfg = subparsers.add_parser("menuconfig", help="Build configurator")
     sub_build.add_argument("-d", "--debug", action="store_true", help="Build as debug profile")
     sub_clean = subparsers.add_parser("clean", help="Clean up the file which was built")
     return parser.parse_args()
@@ -51,6 +54,7 @@ def main():
 
     # Pull down submodules
     log.info("Pulling down submodules for further operation...")
+    pull_submod()
 
     # Parse arguments then
     args = parse_args()
