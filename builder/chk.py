@@ -1,6 +1,7 @@
 # The checker of the bootstrap.
 import os
 import shutil
+from builder.logger import log
 
 def cmd_check(cmd: str) -> bool:
     return shutil.which(cmd) is not None
@@ -22,11 +23,13 @@ def check_component(typ: str) -> bool:
     # the submodules.
     if not cmd_check("git"):
         log.error("\"git\" was not found.")
+        return False
 
     # Linker is the most important thing to build, we can't
     # miss it (though most OS have it)
     if not cmd_check("ld"):
         log.error("\"ld\" was not found.")
+        return False
 
     # For building, these components are all required
     match typ:
@@ -48,4 +51,5 @@ def check_component(typ: str) -> bool:
             # Here, the cargo-anaxa is required.
             if not cmd_check("cargo-anaxa"):
                 os.system("cargo install cargo-anaxa")
+    return True
 

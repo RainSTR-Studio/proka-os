@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-from bootstrap.chk import check_component
-from bootstrap.logger import init_log, log
+from builder.chk import check_component
+from builder.logger import init_log, log
 import argparse
-import logging
-import sys
 import os
+import sys
 import shutil
 
 # Directories to build/clean
@@ -12,18 +11,28 @@ dirs = ["bootloader", "kernel"]
 
 def cfg():
     log.info("Checking components for configuration...")
-    check_component("menuconfig")
+    if not check_component("menuconfig"):
+        log.critical("One component wasn't found, please install it.")
+        sys.exit(1)
     log.info("Loading configurator...")
     os.system("cargo anaxa menuconfig")
 
 def build(is_debug: bool):
     log.info("Checking components for building...")
-    check_component("build")
+    if not check_component("build"):
+        log.critical("One component wasn't found, please install it.")
+        sys.exit(1)
     log.info("Building Rust bootstrap...")
     if is_debug:
-        os.system("RUST_LOG=info cargo run")
+        code = os.system("RUST_LOG=info cargo run") != 0
+        if code != 0:
+            log.critical("Process did not exit successfully")
+            sys.exit(1)
     else:
-        os.system("RUST_LOG=info cargo run release")
+        code = os.system("RUST_LOG=info cargo run release")
+        if code != 0:
+            log.critical("Process did not exit successfully")
+            sys.exit(1)
 
 def clean():
     for dir in dirs:
@@ -40,9 +49,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description="ProkaOS builder")
     subparsers = parser.add_subparsers(dest="subcmd", required=False)
     sub_build = subparsers.add_parser("build", help="Build kernel ISO image")
-    sub_cfg = subparsers.add_parser("menuconfig", help="Build configurator")
+    subparsers.add_parser("menuconfig", help="Build configurator")
     sub_build.add_argument("-d", "--debug", action="store_true", help="Build as debug profile")
-    sub_clean = subparsers.add_parser("clean", help="Clean up the file which was built")
+    subparsers.add_parser("clean", help="Clean up the file which was built")
     return parser.parse_args()
 
 def pull_submod():

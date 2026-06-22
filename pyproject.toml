@@ -1,7 +1,0 @@
-[project]
-name = "proka-bootstrap"
-version = "0.1.0"
-description = "Pre-bootstrap for building ProkaOS"
-readme = "README.md"
-requires-python = ">=3.14"
-dependencies = []
