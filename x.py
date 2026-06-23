@@ -55,6 +55,7 @@ def parse_args():
     return parser.parse_args()
 
 def pull_submod():
+    os.system("git submodule sync")
     os.system("git submodule update --init --recursive --depth=1")
 
 def main():

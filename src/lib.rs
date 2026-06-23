@@ -26,8 +26,8 @@ pub fn arrange_iso() -> std::io::Result<()> {
     fs::copy(src_pkldr, &dst_pkldr)?;
     info!("Copied legacy bootloader -> {}", dst_pkldr.display());
 
-    let src_bootsec = Path::new("./bootloader/output/BOOTMBR");
-    let dst_bootsec = iso.join("bootsec.bin");
+    let src_bootsec = Path::new("./bootloader/output/cdboot.bin");
+    let dst_bootsec = iso.join("cdboot.bin");
     fs::copy(src_bootsec, &dst_bootsec)?;
     info!("Copied legacy boot sector -> {}", dst_pkldr.display());
 

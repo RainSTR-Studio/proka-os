@@ -9,7 +9,7 @@ use walkdir::WalkDir;
 
 pub fn pack_iso() -> io::Result<PathBuf> {
     let iso = Path::new("iso");
-    let bootsec_bin_path = PathBuf::from("iso/bootsec.bin");
+    let bootsec_bin_path = PathBuf::from("iso/cdboot.bin");
     let kernel_path = PathBuf::from("iso/proka-kernel");
     let bootx64_efi_path = PathBuf::from("iso/EFI/Boot/bootx64.efi");
     let iso_output_path = PathBuf::from("proka.iso");
