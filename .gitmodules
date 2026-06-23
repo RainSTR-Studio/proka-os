@@ -1,6 +1,8 @@
 [submodule "kernel"]
 	path = kernel
 	url = https://github.com/RainSTR-Studio/proka-kernel
+	branch = main
 [submodule "bootloader"]
 	path = bootloader
 	url = https://github.com/RainSTR-Studio/proka-bootloader
+	branch = main
