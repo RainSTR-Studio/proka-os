@@ -41,8 +41,11 @@ def clean():
     log.info("Cleaning up bootstrap...")
     os.system("cargo clean")
     log.info("Cleaning up the ISO and its build dir...")
-    shutil.rmtree(r"./iso")
-    os.remove("proka.iso")
+    try:
+        shutil.rmtree(r"./iso")
+        os.remove("proka.iso")
+    except:
+        pass
 
 def parse_args():
     # The arg parser of this tool.
