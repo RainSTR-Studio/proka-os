@@ -29,7 +29,7 @@ pub fn arrange_iso() -> std::io::Result<()> {
     let src_bootsec = Path::new("./bootloader/output/cdboot.bin");
     let dst_bootsec = iso.join("cdboot.bin");
     fs::copy(src_bootsec, &dst_bootsec)?;
-    info!("Copied legacy boot sector -> {}", dst_pkldr.display());
+    info!("Copied legacy boot sector -> {}", dst_bootsec.display());
 
     // Copy kernel
     let src_kernel = Path::new("./kernel/output/proka-kernel");
