@@ -29,6 +29,9 @@ jobs:
           sudo apt update
           sudo apt install -y python3 make nasm gcc
 
+      - name: Install Anaxa Builder
+        run: cargo install cargo-anaxa
+
       - name: Run Debug build
         run: ./x.py build -d
 
