@@ -10,7 +10,6 @@ on:
 jobs:
   build:
     name: Build
-    needs: sync-submodules
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
