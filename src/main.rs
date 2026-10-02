@@ -45,17 +45,17 @@ fn main() -> anyhow::Result<()> {
             error!("This path does not exist!");
             exit(1)
         }
+        env::set_current_dir(path)?;
 
-        let result = Command::new("make")
-            .arg("-C")
-            .arg(dir)
+        let result = Command::new("./build.py")
             .status()
             .expect("Failed to execute command");
 
         if !result.success() {
-            error!("This path does not exist!");
+            error!("Command doea not executed correctly!");
             exit(result.code().expect("Failed to get code"))
         }
+        env::set_current_dir(Path::new(".."))?;
 
         info!("Build complete");
     }

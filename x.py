@@ -66,14 +66,15 @@ def main():
     init_log()
 
     # Pull down submodules
-    log.info("Pulling down submodules for further operation...")
-    pull_submod()
 
     # Parse arguments then
     args = parse_args()
     if args.subcmd is None:
         build(False)
     elif args.subcmd == "build":
+        # Pull down submodules
+        log.info("Pulling down submodules for further operation...")
+        pull_submod()
         if args.debug:
             build(True)
         else:
