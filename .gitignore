@@ -3,7 +3,7 @@
 
 # The directory which contains ISO root
 iso/*
-proka.iso
+output/*
 
 # Added by cargo
 

@@ -6,13 +6,19 @@ use isobemak::{
     BiosBootInfo, BootInfo, IsoImage, IsoImageFile, IsoLayoutProfile, UefiBootInfo, build_iso,
 };
 use walkdir::WalkDir;
+use std::fs;
 
-pub fn pack_iso() -> io::Result<PathBuf> {
+pub fn pack_iso(is_debug: bool, version: &str) -> io::Result<PathBuf> {
     let iso = Path::new("iso");
     let bootsec_bin_path = PathBuf::from("iso/cdboot.bin");
     let kernel_path = PathBuf::from("iso/proka-kernel");
     let bootx64_efi_path = PathBuf::from("iso/EFI/Boot/bootx64.efi");
-    let iso_output_path = PathBuf::from("proka.iso");
+    fs::create_dir_all("output")?;
+    let iso_output_path = if is_debug {
+        PathBuf::from(format!("output/proka-{version}-debug.iso"))
+    } else {
+        PathBuf::from(format!("output/proka-{version}-release.iso"))
+    };
 
     let mut iso_image = IsoImage {
         volume_id: Some("ProkaOS".to_string()),
