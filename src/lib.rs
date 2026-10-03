@@ -1,9 +1,9 @@
 //! The project builder.
 mod iso;
-use std::path::Path;
-use std::fs;
-use log::info;
 pub use iso::*;
+use log::info;
+use std::fs;
+use std::path::Path;
 
 pub fn arrange_iso() -> std::io::Result<()> {
     // ISO root path

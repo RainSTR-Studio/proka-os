@@ -1,13 +1,13 @@
 //! Rust bootstrap of the kernel.
 use colored::Colorize;
 use log::{error, info};
-use std::env;
-use std::process::Command;
-use std::process::exit;
 use proka_builder::{arrange_iso, pack_iso};
-use std::path::Path;
+use std::env;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
+use std::path::Path;
+use std::process::Command;
+use std::process::exit;
 
 /// The directories which needs to iterate
 const DIRS: [&'static str; 2] = ["bootloader", "kernel"];
@@ -47,12 +47,20 @@ fn main() -> anyhow::Result<()> {
         }
         env::set_current_dir(path)?;
 
-        let result = Command::new("./build.py")
-            .status()
-            .expect("Failed to execute command");
+        let result = if is_debug {
+            Command::new("./build.py")
+                .status()
+                .expect("Failed to execute command")
+        } else {
+            Command::new("./build.py")
+                .arg("--profile")
+                .arg("release")
+                .status()
+                .expect("Failed to execute command")
+        };
 
         if !result.success() {
-            error!("Command doea not executed correctly!");
+            error!("Command does not executed correctly!");
             exit(result.code().expect("Failed to get code"))
         }
         env::set_current_dir(Path::new(".."))?;
