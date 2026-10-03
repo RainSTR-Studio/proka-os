@@ -70,6 +70,9 @@ def main():
     # Parse arguments then
     args = parse_args()
     if args.subcmd is None:
+        # Pull down submodules
+        log.info("Pulling down submodules for further operation...")
+        pull_submod()
         build(False)
     elif args.subcmd == "build":
         # Pull down submodules

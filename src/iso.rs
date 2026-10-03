@@ -1,12 +1,12 @@
 //! The ISO packer.
-use std::io;
-use std::path::PathBuf;
-use std::path::Path;
 use isobemak::{
     BiosBootInfo, BootInfo, IsoImage, IsoImageFile, IsoLayoutProfile, UefiBootInfo, build_iso,
 };
-use walkdir::WalkDir;
 use std::fs;
+use std::io;
+use std::path::Path;
+use std::path::PathBuf;
+use walkdir::WalkDir;
 
 pub fn pack_iso(is_debug: bool, version: &str) -> io::Result<PathBuf> {
     let iso = Path::new("iso");
