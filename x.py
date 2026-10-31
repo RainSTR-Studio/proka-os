@@ -66,7 +66,6 @@ def main():
     if args.subcmd is None:
         # Pull down submodules
         log.info("Pulling down submodules for further operation...")
-        pull_submod()
         build(False)
     elif args.subcmd == "build":
         if args.debug:
